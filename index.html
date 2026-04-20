@@ -1,247 +1,269 @@
 <html>
-  <head>
-    <title>Weather</title>
-    <link rel="manifest" href="https://fyildiz1974.github.io/web/files/manifest.json">
-  </head>
-  <body>
-    <!-- Skip Link for Accessibility -->
-<a href="#panel" class="skip-link">Skip to settings</a>
 
-<!-- Background Image -->
-<img id="custom-bg" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&q=80" onerror="this.onerror=null; this.src='assets/images/bg/city.jpg';" alt="Rainy cityscape background">
+<head>
+	<title>Weather</title>
+	<link rel="manifest" href="https://fyildiz1974.github.io/web/files/manifest.json">
+	<link rel="stylesheet" href="./styles.css">
+</head>
 
-<!-- Background Video -->
-<video id="custom-video" class="hidden" muted loop playsinline webkit-playsinline preload="metadata" aria-hidden="true">
-</video>
+<body>
+	<!-- Skip Link for Accessibility -->
+	<a href="#panel" class="skip-link">Skip to settings</a>
 
-<!-- Color Overlay -->
-<div id="color-overlay" aria-hidden="true"></div>
+	<!-- Background Image -->
+	<img id="custom-bg" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&q=80"
+		onerror="this.onerror=null; this.src='assets/images/bg/city.jpg';" alt="Rainy cityscape background">
 
-<!-- Raindrops Canvas -->
-<canvas id="bg-canvas" aria-hidden="true"></canvas>
+	<!-- Background Video -->
+	<video id="custom-video" class="hidden" muted loop playsinline webkit-playsinline preload="metadata"
+		aria-hidden="true">
+	</video>
 
-<!-- Loading Overlay -->
-<div id="loading-overlay" role="alert" aria-live="polite">
-	<div class="loader-spinner"></div>
-	<span class="loader-text">Loading...</span>
-</div>
-<!-- Widgets Container (Hidden until weather arrives) -->
-<div class="widgets-container widgets-hidden" id="widgets-container" aria-hidden="true">
-	<!-- DateTime Widget -->
-	<div class="datetime-widget" id="datetime-widget" role="timer" aria-live="polite" aria-label="Current date and time">
-		<div class="time">
-			<span id="time-display">--:--</span>
-			<span class="time-seconds" id="time-seconds">--</span>
-		</div>
-		<div class="date" id="date-display">--</div>
-		<div class="day-name" id="day-display">--</div>
-		<div class="day-phase" id="day-phase">
-			<span id="day-phase-icon">🌙</span>
-			<span id="day-phase-text">--</span>
-		</div>
+	<!-- Color Overlay -->
+	<div id="color-overlay" aria-hidden="true"></div>
+
+	<!-- Raindrops Canvas -->
+	<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+	<!-- Loading Overlay -->
+	<div id="loading-overlay" role="alert" aria-live="polite">
+		<div class="loader-spinner"></div>
+		<span class="loader-text">Loading...</span>
 	</div>
-
-	<!-- Weather Widget -->
-	<div class="weather-widget loading" id="weather-widget" role="region" aria-label="Weather information">
-		<div class="weather-error">
-			<span class="weather-error-icon">⚠️</span>
-			<span class="weather-error-text" id="weather-error-text">Unable to load weather</span>
-			<button class="weather-retry-btn" id="weather-retry-btn" type="button">Retry</button>
+	<!-- Widgets Container (Hidden until weather arrives) -->
+	<div class="widgets-container widgets-hidden" id="widgets-container" aria-hidden="true">
+		<!-- DateTime Widget -->
+		<div class="datetime-widget" id="datetime-widget" role="timer" aria-live="polite"
+			aria-label="Current date and time">
+			<div class="time">
+				<span id="time-display">--:--</span>
+				<span class="time-seconds" id="time-seconds">--</span>
+			</div>
+			<div class="date" id="date-display">--</div>
+			<div class="day-name" id="day-display">--</div>
+			<div class="day-phase" id="day-phase">
+				<span id="day-phase-icon">🌙</span>
+				<span id="day-phase-text">--</span>
+			</div>
 		</div>
 
-		<div id="weather-content" style="display:none;">
-			<div class="weather-header">
-				<div class="weather-location" id="weather-location" tabindex="0" role="button" aria-label="Change location">
-					<span class="weather-location-icon">📍</span>
-					<span class="weather-location-text" id="location-text">Loading...</span>
-					<span class="weather-location-edit">✎</span>
-				</div>
-				<div class="weather-update-time" id="weather-update-time"></div>
+		<!-- Weather Widget -->
+		<div class="weather-widget loading" id="weather-widget" role="region" aria-label="Weather information">
+			<div class="weather-error">
+				<span class="weather-error-icon">⚠️</span>
+				<span class="weather-error-text" id="weather-error-text">Unable to load weather</span>
+				<button class="weather-retry-btn" id="weather-retry-btn" type="button">Retry</button>
 			</div>
 
-			<div class="weather-current">
-				<span class="weather-icon" id="weather-icon">--</span>
-				<div class="weather-info">
-					<div class="weather-temp">
-						<span id="weather-temp">--</span>
-						<span class="weather-temp-unit">°C</span>
+			<div id="weather-content" style="display:none;">
+				<div class="weather-header">
+					<div class="weather-location" id="weather-location" tabindex="0" role="button"
+						aria-label="Change location">
+						<span class="weather-location-icon">📍</span>
+						<span class="weather-location-text" id="location-text">Loading...</span>
+						<span class="weather-location-edit">✎</span>
 					</div>
-					<div class="weather-desc" id="weather-desc">--</div>
+					<div class="weather-update-time" id="weather-update-time"></div>
 				</div>
-			</div>
 
-			<div class="weather-details">
-				<div class="weather-detail-item">
-					<span class="weather-detail-icon">💧</span>
-					<span id="weather-humidity">--%</span>
+				<div class="weather-current">
+					<span class="weather-icon" id="weather-icon">--</span>
+					<div class="weather-info">
+						<div class="weather-temp">
+							<span id="weather-temp">--</span>
+							<span class="weather-temp-unit">°C</span>
+						</div>
+						<div class="weather-desc" id="weather-desc">--</div>
+					</div>
 				</div>
-				<div class="weather-detail-item">
-					<span class="weather-detail-icon">💨</span>
-					<span id="weather-wind">-- km/h</span>
+
+				<div class="weather-details">
+					<div class="weather-detail-item">
+						<span class="weather-detail-icon">💧</span>
+						<span id="weather-humidity">--%</span>
+					</div>
+					<div class="weather-detail-item">
+						<span class="weather-detail-icon">💨</span>
+						<span id="weather-wind">-- km/h</span>
+					</div>
+					<div class="weather-detail-item">
+						<span class="weather-detail-icon">🌡️</span>
+						<span id="weather-feels">--°</span>
+					</div>
 				</div>
-				<div class="weather-detail-item">
-					<span class="weather-detail-icon">🌡️</span>
-					<span id="weather-feels">--°</span>
-				</div>
-			</div>
 
-			<!-- Next 3 hours (no scroll) -->
-			<div class="weather-hourly" id="weather-hourly" role="list" aria-label="Hourly forecast">
-				<!-- items generated by JS -->
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Location Selection Modal -->
-<div class="location-modal" id="location-modal" role="dialog" aria-modal="true" aria-labelledby="location-modal-title" aria-hidden="true">
-	<div class="location-modal-content">
-		<div class="location-modal-header">
-			<h2 class="location-modal-title" id="location-modal-title">📍 Select Location</h2>
-			<button class="location-modal-close" id="location-modal-close" aria-label="Close" type="button">✕</button>
-		</div>
-
-		<div class="location-option" id="location-auto" tabindex="0" role="button">
-			<span class="location-option-icon">🌐</span>
-			<div class="location-option-info">
-				<div class="location-option-title" id="location-auto-title">Automatic (IP Based)</div>
-				<div class="location-option-desc" id="location-auto-desc">Detect location automatically</div>
-			</div>
-		</div>
-
-		<div class="location-option" id="location-gps" tabindex="0" role="button">
-			<span class="location-option-icon">📍</span>
-			<div class="location-option-info">
-				<div class="location-option-title" id="location-gps-title">Use GPS</div>
-				<div class="location-option-desc" id="location-gps-desc">Precise location (requires permission)
+				<!-- Next 3 hours (no scroll) -->
+				<div class="weather-hourly" id="weather-hourly" role="list" aria-label="Hourly forecast">
+					<!-- items generated by JS -->
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="location-search">
-			<input type="text" class="location-search-input" id="location-search-input" placeholder="Search city..." aria-label="Search city">
-			<div class="location-search-results" id="location-search-results"></div>
+	<!-- Location Selection Modal -->
+	<div class="location-modal" id="location-modal" role="dialog" aria-modal="true"
+		aria-labelledby="location-modal-title" aria-hidden="true">
+		<div class="location-modal-content">
+			<div class="location-modal-header">
+				<h2 class="location-modal-title" id="location-modal-title">📍 Select Location</h2>
+				<button class="location-modal-close" id="location-modal-close" aria-label="Close"
+					type="button">✕</button>
+			</div>
+
+			<div class="location-option" id="location-auto" tabindex="0" role="button">
+				<span class="location-option-icon">🌐</span>
+				<div class="location-option-info">
+					<div class="location-option-title" id="location-auto-title">Automatic (IP Based)</div>
+					<div class="location-option-desc" id="location-auto-desc">Detect location automatically</div>
+				</div>
+			</div>
+
+			<div class="location-option" id="location-gps" tabindex="0" role="button">
+				<span class="location-option-icon">📍</span>
+				<div class="location-option-info">
+					<div class="location-option-title" id="location-gps-title">Use GPS</div>
+					<div class="location-option-desc" id="location-gps-desc">Precise location (requires permission)
+					</div>
+				</div>
+			</div>
+
+			<div class="location-search">
+				<input type="text" class="location-search-input" id="location-search-input" placeholder="Search city..."
+					aria-label="Search city">
+				<div class="location-search-results" id="location-search-results"></div>
+			</div>
+
+			<div class="location-popular" id="location-popular">
+				<div class="location-popular-title" id="location-popular-title">Popular Cities</div>
+				<div class="location-popular-grid" id="location-popular-grid"></div>
+			</div>
 		</div>
-
-		<div class="location-popular" id="location-popular">
-			<div class="location-popular-title" id="location-popular-title">Popular Cities</div>
-			<div class="location-popular-grid" id="location-popular-grid"></div>
-		</div>
 	</div>
-</div>
-<!-- Rain Sound (looped) with multiple fallback sources -->
-<audio id="rain-audio" loop preload="auto">
-	<source src="https://fyildiz1974.github.io/web/files/rain.mp3" type="audio/mpeg">
-	<source src="assets/audio/rain.mp3" type="audio/mpeg">
-	Your browser does not support the audio element.
-</audio>
+	<!-- Rain Sound (looped) with multiple fallback sources -->
+	<audio id="rain-audio" loop preload="auto">
+		<source src="https://fyildiz1974.github.io/web/files/rain.mp3" type="audio/mpeg">
+		<source src="assets/audio/rain.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+	</audio>
 
-<!-- UI Buttons -->
-<button id="btn-settings" class="ui-btn" title="Settings" aria-label="Open the settings panel." aria-expanded="false" aria-controls="panel">
-	⚙️
-</button>
-<button id="btn-sound" class="ui-btn" title="Sound" aria-label="Mute / Unmute" aria-pressed="false">
-	🔇
-</button>
-<button id="btn-share" class="ui-btn" title="Share" aria-label="Copy link">
-	🔗
-</button>
-<button id="btn-install" class="ui-btn" title="Install the app" aria-label="Add the app to the home screen">
-	📲
-</button>
-<button id="btn-fullscreen" class="ui-btn" title="Fullscreen" aria-label="Enter full-screen mode">
-	⛶
-</button>
-
-<!-- Swipe Indicator (Mobile) -->
-<div class="swipe-indicator" aria-hidden="true"></div>
-
-<!-- Settings Panel -->
-<div class="panel" id="panel" role="dialog" aria-label="Settings panel" aria-hidden="true">
-	<button class="panel-close" id="panel-close" aria-label="Close the panel">✕</button>
-
-	<h3 id="bg-heading">🖼️ Background</h3>
-
-	<div class="preset-grid" id="preset-grid" role="listbox" aria-labelledby="bg-heading"></div>
-
-	<div class="input-group">
-		<div class="input-row">
-			<label for="url-input" class="sr-only">Image or Video URL</label>
-			<input type="text" id="url-input" class="text-input" placeholder="Image or Video URL...">
-			<button id="url-btn" class="btn" aria-label="Load from URL">Load</button>
-		</div>
-		<input type="file" id="file-input" accept="image/*,video/*" style="display:none" aria-label="Choose file">
-		<button id="file-btn" class="btn btn-file" aria-label="“Choose file from computer">📁 Choose file from computer
-			(Image/Video)</button>
-	</div>
-
-	<h3 id="effects-heading">🎛️ Visual Effects</h3>
-
-	<div class="control-group">
-		<div class="control-label">
-			<label for="blur-range">Blur</label>
-			<span class="control-value" id="blur-val">5px</span>
-		</div>
-		<input type="range" id="blur-range" min="0" max="25" value="5" aria-describedby="blur-val">
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">
-			<label for="brightness-range">Brightness</label>
-			<span class="control-value" id="brightness-val">30%</span>
-		</div>
-		<input type="range" id="brightness-range" min="20" max="120" value="30" aria-describedby="brightness-val">
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">
-			<label for="rain-range">Rain Intensity</label>
-			<span class="control-value" id="rain-val">70%</span>
-		</div>
-		<input type="range" id="rain-range" min="20" max="100" value="70" aria-describedby="rain-val">
-	</div>
-
-	<h3 id="color-heading">🎨 Hue</h3>
-
-	<div class="color-options" id="color-options" role="radiogroup" aria-labelledby="color-heading">
-		<button class="color-btn none active" data-color="none" title="Yok" role="radio" aria-checked="true" aria-label="No color"></button>
-		<button class="color-btn" data-color="#3498db" style="background:#3498db" title="Blue" role="radio" aria-checked="false" aria-label="Blue"></button>
-		<button class="color-btn" data-color="#9b59b6" style="background:#9b59b6" title="Purple" role="radio" aria-checked="false" aria-label="Purple"></button>
-		<button class="color-btn" data-color="#e74c3c" style="background:#e74c3c" title="Red" role="radio" aria-checked="false" aria-label="Red"></button>
-		<button class="color-btn" data-color="#f39c12" style="background:#f39c12" title="Orange" role="radio" aria-checked="false" aria-label="Orange"></button>
-		<button class="color-btn" data-color="#2ecc71" style="background:#2ecc71" title="Green" role="radio" aria-checked="false" aria-label="Green"></button>
-		<button class="color-btn" data-color="#1abc9c" style="background:#1abc9c" title="Turquoise" role="radio" aria-checked="false" aria-label="Turquoise"></button>
-		<button class="color-btn" data-color="#e91e63" style="background:#e91e63" title="Pink" role="radio" aria-checked="false" aria-label="Pink"></button>
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">
-			<label for="overlay-range">Color Intensity</label>
-			<span class="control-value" id="overlay-val">0%</span>
-		</div>
-		<input type="range" id="overlay-range" min="0" max="80" value="0" aria-describedby="overlay-val">
-	</div>
-
-	<h3 id="sound-heading">🔊 Ambient Sound</h3>
-
-	<div class="sound-control">
-		<button class="sound-icon" id="sound-toggle" aria-label="Mute / Unmute" aria-pressed="false">🔇</button>
-		<label for="volume-range" class="sr-only">Volume</label>
-		<input type="range" id="volume-range" min="0" max="100" value="50" aria-describedby="volume-val">
-		<span class="control-value" id="volume-val">50%</span>
-	</div>
-
-	<h3>⚙️ Other</h3>
-
-	<button id="btn-save" class="btn" style="width:100%; margin-bottom:8px;" aria-label="Save Settings">
-		💾 Save Settings
+	<!-- UI Buttons -->
+	<button id="btn-settings" class="ui-btn" title="Settings" aria-label="Open the settings panel."
+		aria-expanded="false" aria-controls="panel">
+		⚙️
 	</button>
-	<button id="btn-reset" class="btn btn-reset" aria-label="Reset to Default">
-		🔄 Reset to Default
+	<button id="btn-sound" class="ui-btn" title="Sound" aria-label="Mute / Unmute" aria-pressed="false">
+		🔇
 	</button>
-</div>
+	<button id="btn-share" class="ui-btn" title="Share" aria-label="Copy link">
+		🔗
+	</button>
+	<button id="btn-install" class="ui-btn" title="Install the app" aria-label="Add the app to the home screen">
+		📲
+	</button>
+	<button id="btn-fullscreen" class="ui-btn" title="Fullscreen" aria-label="Enter full-screen mode">
+		⛶
+	</button>
 
-<!-- Toast Notification -->
-<div class="toast" id="toast" role="alert" aria-live="polite"></div>
-  </body>
+	<!-- Swipe Indicator (Mobile) -->
+	<div class="swipe-indicator" aria-hidden="true"></div>
+
+	<!-- Settings Panel -->
+	<div class="panel" id="panel" role="dialog" aria-label="Settings panel" aria-hidden="true">
+		<button class="panel-close" id="panel-close" aria-label="Close the panel">✕</button>
+
+		<h3 id="bg-heading">🖼️ Background</h3>
+
+		<div class="preset-grid" id="preset-grid" role="listbox" aria-labelledby="bg-heading"></div>
+
+		<div class="input-group">
+			<div class="input-row">
+				<label for="url-input" class="sr-only">Image or Video URL</label>
+				<input type="text" id="url-input" class="text-input" placeholder="Image or Video URL...">
+				<button id="url-btn" class="btn" aria-label="Load from URL">Load</button>
+			</div>
+			<input type="file" id="file-input" accept="image/*,video/*" style="display:none" aria-label="Choose file">
+			<button id="file-btn" class="btn btn-file" aria-label="“Choose file from computer">📁 Choose file from
+				computer
+				(Image/Video)</button>
+		</div>
+
+		<h3 id="effects-heading">🎛️ Visual Effects</h3>
+
+		<div class="control-group">
+			<div class="control-label">
+				<label for="blur-range">Blur</label>
+				<span class="control-value" id="blur-val">5px</span>
+			</div>
+			<input type="range" id="blur-range" min="0" max="25" value="5" aria-describedby="blur-val">
+		</div>
+
+		<div class="control-group">
+			<div class="control-label">
+				<label for="brightness-range">Brightness</label>
+				<span class="control-value" id="brightness-val">30%</span>
+			</div>
+			<input type="range" id="brightness-range" min="20" max="120" value="30" aria-describedby="brightness-val">
+		</div>
+
+		<div class="control-group">
+			<div class="control-label">
+				<label for="rain-range">Rain Intensity</label>
+				<span class="control-value" id="rain-val">70%</span>
+			</div>
+			<input type="range" id="rain-range" min="20" max="100" value="70" aria-describedby="rain-val">
+		</div>
+
+		<h3 id="color-heading">🎨 Hue</h3>
+
+		<div class="color-options" id="color-options" role="radiogroup" aria-labelledby="color-heading">
+			<button class="color-btn none active" data-color="none" title="Yok" role="radio" aria-checked="true"
+				aria-label="No color"></button>
+			<button class="color-btn" data-color="#3498db" style="background:#3498db" title="Blue" role="radio"
+				aria-checked="false" aria-label="Blue"></button>
+			<button class="color-btn" data-color="#9b59b6" style="background:#9b59b6" title="Purple" role="radio"
+				aria-checked="false" aria-label="Purple"></button>
+			<button class="color-btn" data-color="#e74c3c" style="background:#e74c3c" title="Red" role="radio"
+				aria-checked="false" aria-label="Red"></button>
+			<button class="color-btn" data-color="#f39c12" style="background:#f39c12" title="Orange" role="radio"
+				aria-checked="false" aria-label="Orange"></button>
+			<button class="color-btn" data-color="#2ecc71" style="background:#2ecc71" title="Green" role="radio"
+				aria-checked="false" aria-label="Green"></button>
+			<button class="color-btn" data-color="#1abc9c" style="background:#1abc9c" title="Turquoise" role="radio"
+				aria-checked="false" aria-label="Turquoise"></button>
+			<button class="color-btn" data-color="#e91e63" style="background:#e91e63" title="Pink" role="radio"
+				aria-checked="false" aria-label="Pink"></button>
+		</div>
+
+		<div class="control-group">
+			<div class="control-label">
+				<label for="overlay-range">Color Intensity</label>
+				<span class="control-value" id="overlay-val">0%</span>
+			</div>
+			<input type="range" id="overlay-range" min="0" max="80" value="0" aria-describedby="overlay-val">
+		</div>
+
+		<h3 id="sound-heading">🔊 Ambient Sound</h3>
+
+		<div class="sound-control">
+			<button class="sound-icon" id="sound-toggle" aria-label="Mute / Unmute" aria-pressed="false">🔇</button>
+			<label for="volume-range" class="sr-only">Volume</label>
+			<input type="range" id="volume-range" min="0" max="100" value="50" aria-describedby="volume-val">
+			<span class="control-value" id="volume-val">50%</span>
+		</div>
+
+		<h3>⚙️ Other</h3>
+
+		<button id="btn-save" class="btn" style="width:100%; margin-bottom:8px;" aria-label="Save Settings">
+			💾 Save Settings
+		</button>
+		<button id="btn-reset" class="btn btn-reset" aria-label="Reset to Default">
+			🔄 Reset to Default
+		</button>
+	</div>
+
+	<!-- Toast Notification -->
+	<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+	<script src="./main.js"></script>
+</body>
+
 </html>
